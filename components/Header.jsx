@@ -1,17 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Logo from "./Logo";
 import { GoSearch } from "react-icons/go";
-import { BsThreeDots } from "react-icons/bs";
+import { app } from "../firebaseConfig.js";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
 const Header = () => {
   const router = useRouter();
+  const [user, loading] = useAuthState(getAuth(app));
+
+  useEffect(() => {
+    if (user) {
+      console.log("signed in!");
+    } else if (user == null) {
+      router.push("/login");
+    }
+  }, [user, router]);
+
+  if (loading)
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
   return (
     <div className="w-full h-20 bg-white flex items-center justify-between top-0 sticky z-50 ">
-      <div className="min-w-min flex items-center">
-        <Logo width={"50px"} height={"50px"} />
-        <h2 className="p-2 text-2xl">Pexels</h2>
-      </div>
+      <Link href="/">
+        <a>
+          <div className="min-w-min flex items-center">
+            <Logo width={"50px"} height={"50px"} />
+            <h2 className="p-2 text-2xl">Pexels</h2>
+          </div>
+        </a>
+      </Link>
       <div className="w-full flex relative items-center group">
         <input
           type="text"
@@ -26,14 +48,16 @@ const Header = () => {
       </div>
       <div className="min-w-min">
         <ul className="flex text-xl items-center">
-          <li className="pl-8 hover:cursor-pointer">
-            <Link href="/upload">
-              <a>Upload</a>
-            </Link>
-          </li>
-          <li className="pl-8 hover:cursor-pointer">
-            <BsThreeDots />
-          </li>
+          {user ? (
+            <li className="pl-8 hover:cursor-pointer">
+              <Link href="/upload">
+                <a>Upload</a>
+              </Link>
+            </li>
+          ) : (
+            ""
+          )}
+
           <li className="pl-8 hover:cursor-pointer pr-4 text-white">
             <button
               type="button"
