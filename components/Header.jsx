@@ -5,11 +5,17 @@ import Logo from "./Logo";
 import { GoSearch } from "react-icons/go";
 import { app } from "../firebaseConfig.js";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
+import Image from "next/image";
+import { useState } from "react";
 const Header = () => {
   const router = useRouter();
   const [user, loading] = useAuthState(getAuth(app));
+  const [value, setValue] = useState(true);
 
+  const handleSubmit = () => {
+    setValue(!value);
+  };
   useEffect(() => {
     if (user) {
       console.log("signed in!");
@@ -46,10 +52,10 @@ const Header = () => {
           <GoSearch className="text-2xl right-8 text-gray-400 " />
         </div>
       </div>
-      <div className="min-w-min">
+      <div className="min-w-min relative">
         <ul className="flex text-xl items-center">
           {user ? (
-            <li className="pl-8 hover:cursor-pointer">
+            <li className="px-8 hover:cursor-pointer">
               <Link href="/upload">
                 <a>Upload</a>
               </Link>
@@ -58,15 +64,70 @@ const Header = () => {
             ""
           )}
 
-          <li className="pl-8 hover:cursor-pointer pr-4 text-white">
-            <button
-              type="button"
-              className="bg-pexels pt-3 pb-3 pr-4 pl-4 rounded-md hover:cursor-pointer"
-              onClick={() => router.push("/join-contributer")}
-            >
-              Join
-            </button>{" "}
-          </li>
+          {user?.photoURL ? (
+            <li className="pr-2 hover:cursor-pointer">
+              <Image
+                src={user.photoURL}
+                width={70}
+                height={70}
+                onClick={handleSubmit}
+                className={`w-full h-full rounded-full object-center cursor-pointer object-cover`}
+                alt=""
+              ></Image>
+              {value ? (
+                <div className="w-[120px] h-[60px] px-2 bg-gray-400 rounded top-14 font-bold text-lg right-6 absolute">
+                  <ul>
+                    <Link href="/edit-profile">
+                      <a>
+                        <li>edit-profile</li>
+                      </a>
+                    </Link>
+                    <li onClick={signOut}>logout</li>
+                  </ul>
+                </div>
+              ) : (
+                ""
+              )}
+            </li>
+          ) : (
+            <li className="pr-2 hover:cursor-pointer">
+              <Image
+                src={"/images/user_default.png"}
+                width={70}
+                height={70}
+                onClick={handleSubmit}
+                className={`w-full h-full rounded-full object-center cursor-pointer object-cover`}
+                alt=""
+              ></Image>
+              {value ? (
+                <div className="w-[120px] h-[60px] px-2 bg-gray-400 rounded top-14 font-bold text-lg right-6 absolute">
+                  <ul>
+                    <Link href="/edit-profile">
+                      <a>
+                        <li>edit-profile</li>
+                      </a>
+                    </Link>
+                    <li onClick={signOut}>logout</li>
+                  </ul>
+                </div>
+              ) : (
+                ""
+              )}
+            </li>
+          )}
+          {user ? (
+            ""
+          ) : (
+            <li className="pl-8 hover:cursor-pointer pr-4 text-white">
+              <button
+                type="button"
+                className="bg-pexels pt-3 pb-3 pr-4 pl-4 rounded-md hover:cursor-pointer"
+                onClick={() => router.push("/join-contributer")}
+              >
+                Join
+              </button>{" "}
+            </li>
+          )}
         </ul>
       </div>
     </div>

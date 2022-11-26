@@ -30,11 +30,12 @@ const LoginForm = () => {
       });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     signInWithEmailAndPassword(auth, inputData.email, inputData.password)
       .then((response) => {
         console.log(response.user);
-		router.push("/");
+        router.push("/");
       })
       .catch((err) => {
         alert(err.message);
@@ -77,7 +78,7 @@ const LoginForm = () => {
                 <button
                   type="submit"
                   className="bg-pexels rounded-sm p-2 text-white font-semibold"
-                  onClick={handleSubmit}
+                  onClick={(e) => handleSubmit(e)}
                 >
                   Login
                 </button>

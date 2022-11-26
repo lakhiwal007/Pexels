@@ -23,22 +23,6 @@ const Main = () => {
       <div className="w-full z-0 h-[80vh] relative">
         <Image src={mainPhotoUrl} alt="" layout="fill"></Image>
       </div>
-      <div className="w-full bg-white">
-        <ul className="w-full flex items-center justify-center p-8 text-lg">
-          <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
-            Home
-          </li>
-          <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
-            Videos
-          </li>
-          <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
-            Leaderboard
-          </li>
-          <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
-            Challenges
-          </li>
-        </ul>
-      </div>
 
       <div className="w-full min-h-min flex items-center justify-center flex-col relative">
         <div className="w-full flex items-center justify-center flex-col px-auto relative">

@@ -39,23 +39,24 @@ const Join = () => {
       });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     addDoc(collectionRef, {
-      first_name: inputData.FirstName,
-      last_name: inputData.LastName,
-      email: inputData.email,
-      password: inputData.password,
+      first_name: e.FirstName,
+      last_name: e.LastName,
+      email: e.email,
+      password: e.password,
     })
       .then(() => {
         alert("user added!");
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-    createUserWithEmailAndPassword(auth, inputData.email, inputData.password)
-      .then((response) => {
-        console.log(response.user);
-        router.push("/login");
+        createUserWithEmailAndPassword(auth, e.email, e.password)
+          .then((response) => {
+            console.log(response.user);
+            router.push("/login");
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
       })
       .catch((err) => {
         alert(err.message);
@@ -114,7 +115,7 @@ const Join = () => {
               <button
                 type="submit"
                 className="bg-pexels rounded-sm p-2 text-white"
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e)}
               >
                 Create New Account
               </button>
