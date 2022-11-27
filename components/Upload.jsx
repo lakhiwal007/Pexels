@@ -54,7 +54,7 @@ const Upload = () => {
       location: photoData.Location,
       url: url,
       createdAt: createdAt,
-      photograherName: user.email.split("@")[0],
+      photograherEmail: user.email,
     })
       .then(() => {
         alert("photo added!");

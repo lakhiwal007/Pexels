@@ -5,7 +5,8 @@ import { BsBookmarks } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { AiOutlineHeart } from "react-icons/ai";
 import Link from "next/link";
-const ImageCard = ({ imageSrc, id, photographerName }) => {
+const ImageCard = ({ imageSrc, id, photographerName, phtographerEmail }) => {
+  
   return (
     <div className="max-w-md min-h-min group relative">
       <div className="w-full p-4 items-start justify-end absolute right-0 z-10 hidden group-hover:flex">
@@ -31,7 +32,7 @@ const ImageCard = ({ imageSrc, id, photographerName }) => {
         >
           <a>
             <div className="flex items-center cursor-pointer">
-              <ProfilePic photographerName={photographerName} width={40} height={40} />
+              <ProfilePic photographerEmail={phtographerEmail} width={40} height={40} />
               <span className="ml-2 text-white font-semibold">
                 {photographerName}
               </span>

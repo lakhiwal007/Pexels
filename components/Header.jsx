@@ -23,8 +23,11 @@ const Header = () => {
     if (user == null) {
       router.push("/login");
     }
-  }, [user, router]);
-
+    photographer = photographers.filter((item) => {
+      return item.email === user.email;
+    });
+  }, [user, router, photographers]);
+  console.log(photographer);
   if (loading)
     return (
       <div>

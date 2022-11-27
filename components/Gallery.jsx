@@ -19,7 +19,8 @@ const Gallery = () => {
                 <ImageCard
                   imageSrc={photo.url}
                   id={photo.id}
-                  photographerName={photo.photograherName}
+                  photographerName={photo.photograherEmail.split("@")[0]}
+                  phtographerEmail = {photo.photograherEmail}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1 }}
