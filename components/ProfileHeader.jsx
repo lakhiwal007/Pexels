@@ -5,13 +5,18 @@ import { AiOutlineBell } from "react-icons/ai";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import ProfilePic from "./ProfilePic";
 import Logo from "./Logo";
+import Link from "next/link";
 const ProfileHeader = () => {
   const router = useRouter();
   return (
     <div className="w-full h-20 bg-white flex items-center justify-between top-0 sticky z-50 border border-gray-100">
       <div className="min-w-min flex items-center">
-        <Logo width={"50px"} height={"50px"} />
-        <h2 className="p-2 text-2xl">Pexels</h2>
+        <Link href="/">
+          <a className="min-w-min flex items-center">
+            <Logo width={"50px"} height={"50px"} />
+            <h2 className="p-2 text-2xl">Pexels</h2>
+          </a>
+        </Link>
       </div>
       <div className="w-full flex relative items-center group">
         <input

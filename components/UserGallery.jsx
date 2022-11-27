@@ -1,16 +1,23 @@
-import React from "react";
-import ImageCard from "./ImageCard";
+import React, { useEffect, useState } from "react";
 import useFirestore from "../hooks/useFirestore";
+import ImageCard from "./ImageCard";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
-const Gallery = () => {
+const UserGallery = () => {
   const { docs } = useFirestore("photos");
   const photos = Object.values(docs);
+  const router = useRouter();
+  const {
+    query: { name },
+  } = router;
+  const userPhotos = photos.filter((item) => item.photograherName === name);
+
   return (
     <div className="w-full pl-12 pr-12 pt-0">
       <div className="w-full min-h-screen flex items-center justify-center">
         <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-          {photos.map((photo) => {
+          {userPhotos.map((photo) => {
             return (
               <motion.div
                 key={photo.id}
@@ -19,7 +26,6 @@ const Gallery = () => {
                 <ImageCard
                   imageSrc={photo.url}
                   id={photo.id}
-                  photographerName={photo.photograherName}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1 }}
@@ -33,4 +39,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default UserGallery;

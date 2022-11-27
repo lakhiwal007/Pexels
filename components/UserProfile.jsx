@@ -5,8 +5,21 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaInstagram } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Link from "next/link";
+import useFirestore from "../hooks/useFirestore";
+import { useRouter } from "next/router";
 
 const UserProfile = () => {
+  const { docs } = useFirestore("photographers");
+  const photographers = Object.values(docs);
+  const router = useRouter();
+  const {
+    
+    query: { name },
+  } = router;
+  const photographer = photographers.find(
+    (item) => item.email.split("@")[0] === name
+  );
+  console.log(photographer);
   return (
     <div className="w-full p-0 m-0">
       <div className="w-full p-0 m-0 flex flex-col items-center justify-center mt-8">
@@ -58,19 +71,19 @@ const UserProfile = () => {
         <div className="w-full flex items-center justify-between mt-8">
           <div className="w-full bg-white">
             <ul className="w-full flex items-center justify-center p-16 text-lg">
-              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
+              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded">
                 Gallery <span className="pl-2">21</span>
               </li>
-              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
+              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded">
                 Collections <span className="pl-2">0</span>
               </li>
-              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
+              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded">
                 Statistics <span className="pl-2">0</span>
               </li>
-              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
+              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded">
                 Followers <span className="pl-2">0</span>
               </li>
-              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded-full">
+              <li className="pl-4 text-gray-800 cursor-pointer pt-2 pb-2 pl-4 pr-4 hover:bg-black hover:text-white hover:rounded">
                 Following <span className="pl-2">0</span>
               </li>
             </ul>

@@ -21,7 +21,7 @@ const Main = () => {
   return (
     <div className="w-full min-h-screen relative">
       <div className="w-full z-0 h-[80vh] relative">
-        <Image src={mainPhotoUrl} alt="" layout="fill"></Image>
+        <Image src={mainPhotoUrl} alt="mainPhoto" layout="fill"></Image>
       </div>
 
       <div className="w-full min-h-min flex items-center justify-center flex-col relative">
@@ -46,9 +46,8 @@ const Main = () => {
                   >
                     <ImageCard
                       imageSrc={photo.url}
-                      key={photo.id}
                       id={photo.id}
-                      show={true}
+                      photographerName={photo.photograherName}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1 }}

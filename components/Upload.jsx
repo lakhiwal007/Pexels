@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 const Upload = () => {
   const router = useRouter();
   const [user, loading] = useAuthState(getAuth(app));
-
+  console.log(user);
   useEffect(() => {
     if (user) {
       console.log("signed in!");
@@ -54,7 +54,7 @@ const Upload = () => {
       location: photoData.Location,
       url: url,
       createdAt: createdAt,
-      photograherName: user.displayName,
+      photograherName: user.email.split("@")[0],
     })
       .then(() => {
         alert("photo added!");

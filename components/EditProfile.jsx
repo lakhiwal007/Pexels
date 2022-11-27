@@ -36,7 +36,7 @@ const Edit_profile = () => {
   };
 
   const handleSubmit = () => {
-    console.log(file);
+    
     const storageRef = ref(storage, `profilePic/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 

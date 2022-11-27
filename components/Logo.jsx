@@ -4,8 +4,7 @@ import Link from "next/link";
 const Logo = ({ width, height }) => {
   const router = useRouter();
   return (
-    <Link href="/">
-      <a>
+
         <svg
           width={width}
           height={height}
@@ -21,8 +20,6 @@ const Logo = ({ width, height }) => {
             fill="#fff"
           ></path>
         </svg>
-      </a>
-    </Link>
   );
 };
 

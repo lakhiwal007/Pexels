@@ -11,8 +11,8 @@ import { useState } from "react";
 const Header = () => {
   const router = useRouter();
   const [user, loading] = useAuthState(getAuth(app));
-  const [value, setValue] = useState(true);
-
+  const [value, setValue] = useState(false);
+  const auth = getAuth();
   const handleSubmit = () => {
     setValue(!value);
   };
@@ -65,55 +65,41 @@ const Header = () => {
           )}
 
           {user?.photoURL ? (
-            <li className="pr-2 hover:cursor-pointer">
+            <li onClick={handleSubmit} className="pr-2 hover:cursor-pointer">
               <Image
                 src={user.photoURL}
                 width={70}
                 height={70}
-                onClick={handleSubmit}
                 className={`w-full h-full rounded-full object-center cursor-pointer object-cover`}
                 alt=""
               ></Image>
-              {value ? (
-                <div className="w-[120px] h-[60px] px-2 bg-gray-400 rounded top-14 font-bold text-lg right-6 absolute">
-                  <ul>
-                    <Link href="/edit-profile">
-                      <a>
-                        <li>edit-profile</li>
-                      </a>
-                    </Link>
-                    <li onClick={signOut}>logout</li>
-                  </ul>
-                </div>
-              ) : (
-                ""
-              )}
             </li>
           ) : (
-            <li className="pr-2 hover:cursor-pointer">
+            <li onClick={handleSubmit} className="pr-2 hover:cursor-pointer">
               <Image
                 src={"/images/user_default.png"}
                 width={70}
                 height={70}
-                onClick={handleSubmit}
                 className={`w-full h-full rounded-full object-center cursor-pointer object-cover`}
                 alt=""
               ></Image>
-              {value ? (
-                <div className="w-[120px] h-[60px] px-2 bg-gray-400 rounded top-14 font-bold text-lg right-6 absolute">
-                  <ul>
-                    <Link href="/edit-profile">
-                      <a>
-                        <li>edit-profile</li>
-                      </a>
-                    </Link>
-                    <li onClick={signOut}>logout</li>
-                  </ul>
-                </div>
-              ) : (
-                ""
-              )}
             </li>
+          )}
+          {value ? (
+            <div className="w-[120px] h-[60px] px-2 bg-gray-400 rounded top-20 font-bold text-lg right-5 fixed">
+              <ul>
+                <Link href="/edit-profile">
+                  <a>
+                    <li>edit-profile</li>
+                  </a>
+                </Link>
+                <li>
+                  <a onClick={signOut(auth)}>log out</a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            ""
           )}
           {user ? (
             ""
