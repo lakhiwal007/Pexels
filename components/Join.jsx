@@ -32,7 +32,7 @@ const Join = () => {
     signInWithPopup(auth, googleProvider)
       .then((response) => {
         console.log(response.user);
-        router.push("/");
+        router.push("/edit-profile");
       })
       .catch((err) => {
         alert(err.message);

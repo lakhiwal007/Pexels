@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 const Upload = () => {
   const router = useRouter();
   const [user, loading] = useAuthState(getAuth(app));
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     if (user) {
       console.log("signed in!");

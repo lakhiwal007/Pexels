@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, {useEffect} from "react";
 import Link from "next/link";
 import ProfileHeader from "./ProfileHeader";
 import ProfilePic from "./ProfilePic";
@@ -7,6 +7,9 @@ import { addDoc, collection } from "firebase/firestore";
 import { database, storage, timestamp } from "../firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
 
 const Edit_profile = () => {
   const [inputData, setInputData] = useState({});
@@ -14,6 +17,15 @@ const Edit_profile = () => {
   const [err, setErr] = useState(null);
   const [progress, setProgress] = useState(0);
   const [url, setUrl] = useState(null);
+  const router = useRouter();
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user == null) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   const types = ["image/png", "image/jpeg", "image/jfif"];
 
@@ -36,7 +48,6 @@ const Edit_profile = () => {
   };
 
   const handleSubmit = () => {
-    
     const storageRef = ref(storage, `profilePic/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -74,6 +85,7 @@ const Edit_profile = () => {
           })
             .then(() => {
               alert("photographer added!");
+              router.push("/");
             })
             .catch((err) => {
               alert(err.message);

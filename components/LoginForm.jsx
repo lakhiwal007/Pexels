@@ -1,16 +1,19 @@
 import React from "react";
 import { useState } from "react";
-import { app } from "../firebaseConfig";
+// import { app } from "../firebaseConfig";
 import {
   getAuth,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import useFirestore from "../hooks/useFirestore";
 import { useRouter } from "next/router";
 
 const LoginForm = () => {
   const router = useRouter();
+  const { docs } = useFirestore("photographers");
+  const photographers = Object.values(docs);
   let auth = getAuth();
   let googleProvider = new GoogleAuthProvider();
   const [inputData, setInputData] = useState({});
@@ -22,8 +25,15 @@ const LoginForm = () => {
   const googleSubmit = () => {
     signInWithPopup(auth, googleProvider)
       .then((response) => {
-        console.log(response.user);
-        router.push("/");
+        // console.log(response.user.email);
+        if (
+          photographers.some((item) => {
+            console.log(item.email === response.user.email);
+            return item.email === response.user.email;
+          })
+        ) {
+          router.push("/");
+        } else router.push("/edit-profile");
       })
       .catch((err) => {
         alert(err.message);
@@ -34,8 +44,14 @@ const LoginForm = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, inputData.email, inputData.password)
       .then((response) => {
-        console.log(response.user);
-        router.push("/");
+        // console.log(response.user.email);
+        if (
+          photographers.some((item) => {
+            return item.email === response.user.email;
+          })
+        ) {
+          router.push("/");
+        } else router.push("/edit-profile");
       })
       .catch((err) => {
         alert(err.message);

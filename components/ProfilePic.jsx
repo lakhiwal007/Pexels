@@ -8,7 +8,7 @@ const ProfilePic = ({ photographerName, width, height }) => {
 
   const photographer = photographers.find(
     (item) => item.email.split("@")[0] === photographerName
-  )[0];
+  );
   // console.log(photographer);
   return (
     <div className="flex items-center justify-center bg-pexels  rounded-full p-0">

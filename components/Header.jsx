@@ -8,18 +8,19 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth, signOut } from "firebase/auth";
 import Image from "next/image";
 import { useState } from "react";
+import useFirestore from "../hooks/useFirestore";
 const Header = () => {
   const router = useRouter();
   const [user, loading] = useAuthState(getAuth(app));
   const [value, setValue] = useState(false);
+  const { docs } = useFirestore("photographers");
+  const photographers = Object.values(docs);
   const auth = getAuth();
   const handleSubmit = () => {
     setValue(!value);
   };
   useEffect(() => {
-    if (user) {
-      console.log("signed in!");
-    } else if (user == null) {
+    if (user == null) {
       router.push("/login");
     }
   }, [user, router]);
@@ -30,6 +31,7 @@ const Header = () => {
         <h1>Loading...</h1>
       </div>
     );
+
   return (
     <div className="w-full h-20 bg-white flex items-center justify-between top-0 sticky z-50 ">
       <Link href="/">
@@ -64,7 +66,7 @@ const Header = () => {
             ""
           )}
 
-          {user?.photoURL ? (
+          {user ? (
             <li onClick={handleSubmit} className="pr-2 hover:cursor-pointer">
               <Image
                 src={user.photoURL}
